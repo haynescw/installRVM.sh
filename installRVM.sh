@@ -1,15 +1,15 @@
-printf "\n<<<<<<<<<<<<<<<Installing openssl>>>>>>>>>>>>>>>\n"
+printf "\n<<<<<<<<<<<<<<< Installing openssl >>>>>>>>>>>>>>>\n"
 brew install openssl
 wait
-printf "\n<<<<<<<<<<<<<<<Installing RVM most recent Stable version>>>>>>>>>>>>>>>\n"
+printf "\n<<<<<<<<<<<<<<< Installing RVM most recent Stable version >>>>>>>>>>>>>>>\n"
 curl -L https://get.rvm.io | bash -s stable
 wait
-printf "\n<<<<<<<<<<<<<<<Adding lines to you bash profile to source RVM>>>>>>>>>>>>>>>\n"
+printf "\n<<<<<<<<<<<<<<< Adding lines to you bash profile to source RVM >>>>>>>>>>>>>>>\n"
 echo '# For RVM install' >> $HOME/.bash_profile
 echo '[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*' >> $HOME/.bash_profile
-echo '. ~/.bashrc\n\n' >> $HOME/.bash_profile
+echo '. ~/.bashrc' >> $HOME/.bash_profile
 wait
-printf "\n<<<<<<<<<<<<<<<Loading RVM inta session>>>>>>>>>>>>>>>\n"
+printf "\n<<<<<<<<<<<<<<< Loading RVM inta session >>>>>>>>>>>>>>>\n"
 
 # Load RVM into a shell session *as a function*
 if [[ -s "$HOME/.rvm/scripts/rvm" ]] ; then
@@ -30,21 +30,24 @@ fi
 wait 
 source $HOME/.bash_profile
 wait
-printf "\n<<<<<<<<<<<<<<<Verifying rvm is a function>>>>>>>>>>>>>>>\n"
+printf "\n<<<<<<<<<<<<<<< Verifying rvm is a function >>>>>>>>>>>>>>>\n"
 type rvm | head -n1
 wait
-printf "\n<<<<<<<<<<<<<<<Installing latest stable Ruby 1.8.7>>>>>>>>>>>>>>>\n"
+printf "\n<<<<<<<<<<<<<<< Installing latest stable Ruby 1.8.7 >>>>>>>>>>>>>>>\n"
 rvm install 1.8.7-p371
 wait
-printf "\n<<<<<<<<<<<<<<<Checking the RVM System>>>>>>>>>>>>>>>\n"
+printf "\n<<<<<<<<<<<<<<< Checking the RVM System >>>>>>>>>>>>>>>\n"
 rvm system
 wait
 printf "\n<<<<<<<<<<<<<<<Setting RVM default as 1.8.7>>>>>>>>>>>>>>>\n"
 rvm use 1.8.7-p371 --default
 wait
-printf "\n<<<<<<<<<<<<<<<Verifying Which Ruby>>>>>>>>>>>>>>>\n"
+printf "\n<<<<<<<<<<<<<<< Verifying Which Ruby >>>>>>>>>>>>>>>\n"
 which ruby
 wait
+printf "\n<<<<<<<<<<<<<<< Creating .gemrc to suppress ri and rdoc >>>>>>>>>>>>>>>\n"
+touch ~/.gemrc
+echo "gem: --no-ri --no-rdoc" >> ~/.gemrc
 
 
 printf "\n######################################################################\n"
@@ -68,26 +71,17 @@ echo "source '/usr/local/rvm/scripts/rvm'" >> $FILE
 echo "else" >> $FILE
 echo "printf 'ERROR: An RVM installation was not found.\n'" >> $FILE
 echo "fi" >> $FILE
-echo "svn mkdir svn://apptest.uwec.edu/webdev/appxxx -m 'initial base for appxxx'" >> $FILE 
-echo "svn mkdir svn://apptest.uwec.edu/webdev/appxxx/trunk -m 'initial trunk for appxxx'" >> $FILE
 echo "rvm gemset create app\$1" >> $FILE
 echo "rvm gemset use app\$1" >> $FILE
-echo "rvm 1.8.7-p358@app\$1" >> $FILE
+echo "rvm 1.8.7-p371@app\$1" >> $FILE  
+echo "printf '\n\n**************** Installing Rails, this may take a while ***************\n\n'" >> $FILE
 echo "gem install rails" >> $FILE
+echo "printf '**************** Creating app\$1, this may take a while ***************\n\n'" >> $FILE
 echo "rails new app\$1" >> $FILE
 echo "cd app\$1" >> $FILE
-echo "rvm --rvmrc --create 1.8.6-p358@app$1" >> $FILE
-echo "mv config/database.yml config/database_example.yml" >> $FILE
-echo "rm -r log/*" >> $FILE
-echo "rm -r tmp/*" >> $FILE
-echo "svn add ." >> $FILE
-echo "svn commit -m 'Initial import of app'" >> $FILE
-echo "svn propset svn:ignore database.yml config/" >> $FILE
-echo "svn propset svn:ignore '*' log/" >> $FILE
-echo "svn propset svn:ignore '*' tmp/" >> $FILE
-echo "svn propset svn:ignore '*.sqlite3' db/" >> $FILE
-echo "svn commit -m 'Ignoring files'" >> $FILE
-echo "cp config/darabase_example.yml config/databse.yml" >> $FILE
+echo "printf '**************** Executing the bundle install command, this may take a while ***************\n\n'" >> $FILE
+echo "bundle install" >> $FILE
+echo "rvm --rvmrc --create 1.8.7-p371@app\$1" >> $FILE
 echo "cd " >> $FILE
 chmod +x $FILE
 wait
@@ -100,19 +94,23 @@ printf "\n<<<<<<<<<<<<<<<Creating getapp command>>>>>>>>>>>>>>>\n"
 FILE_2="bin/getapp"
 touch $FILE_2
 wait
-echo "# Load RVM into a shell session *as a function*" >> $FILE
-echo "if [[ -s '$HOME/.rvm/scripts/rvm' ]] ; then" >> $FILE
-echo "# First try to load from a user install" >> $FILE
-echo "source '$HOME/.rvm/scripts/rvm'" >> $FILE
-echo "elif [[ -s '/usr/local/rvm/scripts/rvm' ]] ; then" >> $FILE
-echo "# Then try to load from a root install" >> $FILE
-echo "source '/usr/local/rvm/scripts/rvm'" >> $FILE
-echo "else" >> $FILE
-echo "printf 'ERROR: An RVM installation was not found.\n'" >> $FILE
-echo "fi" >> $FILE
+echo "# Load RVM into a shell session *as a function*" >> $FILE_2
+echo "if [[ -s '$HOME/.rvm/scripts/rvm' ]] ; then" >> $FILE_2
+echo "# First try to load from a user install" >> $FILE_2
+echo "source '$HOME/.rvm/scripts/rvm'" >> $FILE_2
+echo "elif [[ -s '/usr/local/rvm/scripts/rvm' ]] ; then" >> $FILE_2
+echo "# Then try to load from a root install" >> $FILE_2
+echo "source '/usr/local/rvm/scripts/rvm'" >> $FILE_2
+echo "else" >> $FILE_2
+echo "printf 'ERROR: An RVM installation was not found.\n'" >> $FILE_2
+echo "fi" >> $FILE_2
 echo "cd $HOME/rails_projects/" >> $FILE_2
 echo "svn co svn://apptest.uwec.edu/webdev/app\$1/trunk app\$1" >> $FILE_2
 echo "cd" >> $FILE_2
+echo "rvm gemset create app\$1" >> $FILE_2
+echo "rvm gemset use app\$1" >> $FILE_2
+echo "rvm 1.8.7-p371@app\$1" >> $FILE_2 
+echo "rvm --rvmrc --create 1.8.7-p371@app\$1" >> $FILE_2
 chmod +x $FILE_2 
 source $HOME/.bash_profile
 
