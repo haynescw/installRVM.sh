@@ -73,6 +73,7 @@ echo "svn mkdir svn://apptest.uwec.edu/webdev/appxxx/trunk -m 'initial trunk for
 echo "rvm gemset create app\$1" >> $FILE
 echo "rvm gemset use app\$1" >> $FILE
 echo "rvm 1.8.7-p358@app\$1" >> $FILE
+echo "gem install rails" >> $FILE
 echo "rails new app\$1" >> $FILE
 echo "cd app\$1" >> $FILE
 echo "rvm --rvmrc --create 1.8.6-p358@app$1" >> $FILE
