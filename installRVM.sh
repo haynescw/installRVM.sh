@@ -70,11 +70,11 @@ echo "printf 'ERROR: An RVM installation was not found.\n'" >> $FILE
 echo "fi" >> $FILE
 echo "svn mkdir svn://apptest.uwec.edu/webdev/appxxx -m 'initial base for appxxx'" >> $FILE 
 echo "svn mkdir svn://apptest.uwec.edu/webdev/appxxx/trunk -m 'initial trunk for appxxx'" >> $FILE
-echo "rvm gemset create app$1" >> $FILE
-echo "rvm gemset use app$1" >> $FILE
-echo "rvm 1.8.7-p358@app$1" >> $FILE
-echo "rails new app$1" >> $FILE
-echo "cd app$1" >> $FILE
+echo "rvm gemset create app\$1" >> $FILE
+echo "rvm gemset use app\$1" >> $FILE
+echo "rvm 1.8.7-p358@app\$1" >> $FILE
+echo "rails new app\$1" >> $FILE
+echo "cd app\$1" >> $FILE
 echo "rvm --rvmrc --create 1.8.6-p358@app$1" >> $FILE
 echo "mv config/database.yml config/database_example.yml" >> $FILE
 echo "rm -r log/*" >> $FILE
@@ -110,7 +110,7 @@ echo "else" >> $FILE
 echo "printf 'ERROR: An RVM installation was not found.\n'" >> $FILE
 echo "fi" >> $FILE
 echo "cd $HOME/rails_projects/" >> $FILE_2
-echo "svn co svn://apptest.uwec.edu/webdev/app$1/trunk app$1" >> $FILE_2
+echo "svn co svn://apptest.uwec.edu/webdev/app\$1/trunk app\$1" >> $FILE_2
 echo "cd" >> $FILE_2
 chmod +x $FILE_2 
 source $HOME/.bash_profile
