@@ -5,7 +5,7 @@ printf "\n<<<<<<<<<<<<<<<Installing RVM most recent Stable version>>>>>>>>>>>>>>
 curl -L https://get.rvm.io | bash -s stable
 wait
 printf "\n<<<<<<<<<<<<<<<Adding lines to you bash profile to source RVM>>>>>>>>>>>>>>>\n"
-echo '\n# For RVM install\n' >> $HOME/.bash_profile
+echo '# For RVM install' >> $HOME/.bash_profile
 echo '[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*' >> $HOME/.bash_profile
 echo '. ~/.bashrc\n\n' >> $HOME/.bash_profile
 wait
@@ -55,7 +55,7 @@ printf "######################################################################\n
 #Allows the ability to create a gemset when creating a new app
 ######################################################################
 printf "\n<<<<<<<<<<<<<<<Creating createapp command>>>>>>>>>>>>>>>\n"
-FILE="bin/createapp.bash"
+FILE="bin/createapp"
 touch $FILE
 wait
 echo "# Load RVM into a shell session *as a function*" >> $FILE
@@ -96,7 +96,7 @@ wait
 ######################################################################
 
 printf "\n<<<<<<<<<<<<<<<Creating getapp command>>>>>>>>>>>>>>>\n"
-FILE_2="bin/getapp.bash"
+FILE_2="bin/getapp"
 touch $FILE_2
 wait
 echo "# Load RVM into a shell session *as a function*" >> $FILE
@@ -115,6 +115,10 @@ echo "cd" >> $FILE_2
 chmod +x $FILE_2 
 source $HOME/.bash_profile
 
+sudo mv bin/createapp /bin/
+wait
+sudo mv bin/getapp /bin/
+wait
 
 printf "\n<<<<<<<<<<<<<<<Install Complete>>>>>>>>>>>>>>>\n"
 printf "You can now use the command createapp followed by the app number\n"
