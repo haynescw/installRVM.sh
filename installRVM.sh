@@ -1,6 +1,9 @@
 printf "\n<<<<<<<<<<<<<<< Installing mysql >>>>>>>>>>>>>>>\n"
 brew install mysql
 wait  
+printf "\n<<<<<<<<<<<<<<< Installing free-tds >>>>>>>>>>>>>>>\n"
+brew install free-tds
+wait  
 printf "\n<<<<<<<<<<<<<<< Installing openssl >>>>>>>>>>>>>>>\n"
 brew install openssl
 wait
