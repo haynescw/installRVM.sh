@@ -1,3 +1,6 @@
+printf "\n<<<<<<<<<<<<<<< Installing sqlite >>>>>>>>>>>>>>>\n"
+brew install sqlite
+wait  
 printf "\n<<<<<<<<<<<<<<< Installing mysql >>>>>>>>>>>>>>>\n"
 brew install mysql
 wait  
